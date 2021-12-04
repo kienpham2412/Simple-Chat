@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<head>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <div class="container-fluid full-height-vh">
+        <div class="row full-height justify-center">
+            <!-- <div class="col-md-3 full-height bg-light-sky padding-10">
+                <p>hello</p>
+            </div> -->
+            <div class="col-md-9 full-height">
+                <div id="message_board" class="border height-94 bg-light full-width y-scroll padding-10 flex-box flex-column justify-end">
+                    <!-- <div class="full-width full-height"></div> -->
+                </div>
+                <div class="row">
+                    <div class="col-md-11">
+                        <input type="text" id="user_input" class="form-control" name="user_input">
+                    </div>
+                    <div class="col-md-1">
+                        <input type="button" id="send" class="btn btn-primary full-width" value="send">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+
+        const messageBoard = $("#message_board");
+        var socket = io();
+        var serverIP = "http://" + location.host;
+        var currentUrl = window.location.href;
+        var myID;
+        var userName;
+
+        $(document).ready(function () {
+            $.ajax({
+                url: serverIP + "/connect",
+                type: "get",
+                success: function (data) {
+                    var idRes = JSON.parse(data);
+                    myID = idRes.id;
+                }
+            });
+
+            // get data from url
+            let params = (new URL(currentUrl)).searchParams;
+            userName = params.get("username");
+        })
+
+        $("#user_input").keypress(function (event) {
+            if (event.keyCode == 13) {
+                sendMessage();
+            }
+        })
+
+        $("#send").click(function () {
+            sendMessage();
+        })
+
+        function sendMessage() {
+            var message = $("#user_input").val();
+
+            if (message != "") {
+                // emit "chat message" event to server
+                socket.emit("chat message", message, myID, userName);
+                $("#user_input").val("");
+            }
+        }
+
+        // listening to "broadcast" event from server
+        socket.on("broadcast", function (message, id, userName) {
+            // messageBoard.append("<p>ID: " + myID + " " + userName +" - " + message + "</p>");
+            if (id == myID) {
+                $(myMessageBox(userName, message)).appendTo(messageBoard);
+            } else {
+                $(messageBox(userName, message)).appendTo(messageBoard);
+            }
+
+            messageBoard.scrollTop = messageBoard.height;
+        })
+
+        function myMessageBox(username, message) {
+            let messageBox = "<div class=\"full-width flex-box justify-end\">" +
+                "<div class=\"message-box my-message-box\">" +
+                "<span class=\"span-name\">" + username + "</span>" +
+                "<p class=\"message\">" + message + "</p>" +
+                "</div>" +
+                "</div>";
+            return messageBox;
+        }
+
+        function messageBox(username, message) {
+            let messageBox = "<div class=\"full-width\">" +
+                "<div class=\"message-box other-message-box\">" +
+                "<span class=\"span-name\">" + username + "</span>" +
+                "<p class=\"message\">" + message + "</p>"
+            "</div>" +
+                "</div>";
+            return messageBox;
+        }
+    </script>
+</body>

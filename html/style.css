@@ -1,0 +1,143 @@
+#chat_box{
+    width: 50%;
+}
+
+#user_input{
+    width: 100%;
+}
+
+.span-name{
+    color: #606060;
+    font-size: 85%;
+}
+
+.message{
+    margin-bottom: 0;
+}
+
+.message-box{
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 80%;
+    width: fit-content;
+    margin-bottom: 10px;
+}
+
+.my-message-box{
+    text-align: end;
+    background-color: #c8e5ff;
+}
+
+.other-message-box{
+    background-color: #fff;
+}
+
+.padding-box{
+    background-clip: padding-box;
+}
+
+.y-scroll{
+    overflow-y: scroll;
+    scrollbar-color: #659aec #d5edf9;
+    scrollbar-width: thin;
+}
+
+.flex-box{
+    display: flex;
+}
+
+.flex-column{
+    flex-direction: column;
+}
+
+.justify-center{
+    justify-content: center;
+}
+
+.justify-end{
+    justify-content: flex-end;
+}
+
+.full-width{
+    width: 100%;
+}
+
+.width-10{
+    width: 10%;
+}
+
+.width-80{
+    width: 80%;
+}
+
+.width-90{
+    width: 90%;
+}
+
+.full-height{
+    height: 100%;
+}
+
+.height-10{
+    height: 10%;
+}
+
+.height-80{
+    height: 80%;
+}
+
+.height-90{
+    height: 90%;
+}
+
+.height-94{
+    height: 94%;
+}
+
+.height-50-px{
+    height: 50px;
+}
+
+.full-height-vh{
+    height: 100vh;
+}
+
+.center-text-align{
+    text-align: center;
+}
+
+.padding-10{
+    padding: 10px;
+}
+
+.padding-b-20{
+    padding-bottom: 20px;
+}
+
+.padding-b-15{
+    padding-bottom: 15px;
+}
+
+.padding-0{
+    padding: 0;
+}
+
+.border-r-10{
+    border-radius: 10px;
+}
+
+.bg-light-sky{
+    background: #c5ecff;
+}
+
+.table{
+    display: table;
+}
+
+.table-cell{
+    display: table-cell;
+}
+
+.table-row{
+    display: table-row;
+}
